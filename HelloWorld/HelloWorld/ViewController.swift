@@ -10,10 +10,30 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var callsBlockedLab: UILabel!
+    @IBOutlet weak var switchAct: UISwitch!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet var background: UIView!
+    @IBOutlet weak var backgroundImage: UIImageView!
     var message = "boo"
+    var callsBlocked = 0;
+    let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
+//        background.backgroundColor = UIColor(patternImage: UIImage(named : "Screen Shot 2019-03-10 at 8.16.08 AM")!)
+        callsBlocked = defaults.integer(forKey: "callsBlocked")
+        updateCallsBlockedLab()
+        if switchAct.isOn {
+            statusLabel.text = "Activated"
+        }
+        else {
+            statusLabel.text = "Deactivated"
+        }
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    func updateCallsBlockedLab() {
+        defaults.set(callsBlocked, forKey: "callsBlocked")
+        callsBlockedLab.text = String(callsBlocked)
     }
     
     @IBAction func showMessage(sender: UIButton) {
@@ -22,15 +42,24 @@ class ViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func blockCall(sender: UIButton) {
+        callsBlocked += 1
+        updateCallsBlockedLab()
+    }
     @IBAction func switchClicked(sender: UISwitch) {
         if sender.isOn {
             message = "yayayaya"
+            statusLabel.text = "Activated"
+            background.alpha = 1
+//            background.backgroundColor = UIColor(patternImage: UIImage(named : "Screen Shot 2019-03-10 at 8.16.08 AM")!)//, alpha: 1)
         }
         else {
             message = "booooo"
+            statusLabel.text = "Deactivated"
+            background.alpha = 0.9
+//            background.backgroundColor = UIColor(patternImage: UIImage(named : "Screen Shot 2019-03-10 at 8.16.08 AM")!)//, alpha: 0.75)
         }
     }
-
-
+    
 }
 

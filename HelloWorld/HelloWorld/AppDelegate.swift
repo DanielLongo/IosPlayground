@@ -12,9 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: ["callsBlocked" : 0])
         // Override point for customization after application launch.
         return true
     }
